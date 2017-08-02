@@ -9,7 +9,12 @@
 [![NPM downloads][npm-dl-img]][npm-url]
 [![NPM license][npm-lc-img]][npm-url]
 
-Build your own lodash by config.
+Build your own lodash since there's too many methods in lodash which you may not need.
+
+- packed by rollup
+- output in IIFE format or ECMAScript Module
+- use in CLI or nodejs
+- produce minify dist and source map
 
 ## Install
 
