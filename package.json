@@ -1,0 +1,46 @@
+{
+  "name": "lodash-builder",
+  "version": "0.0.1",
+  "description": "Build your own lodash by config.",
+  "main": "index.js",
+  "scripts": {
+    "ut": "./node_modules/.bin/ava test/test.js --verbose --color --tap --fail-fast | ./node_modules/.bin/tap-diff",
+    "eslint": "./node_modules/.bin/eslint -c .eslintrc.yml .",
+    "test": "npm run eslint && npm run ut",
+    "cov-report": "./node_modules/.bin/nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls",
+    "cov": "./node_modules/.bin/nyc npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/poppinlp/lodash-builder.git"
+  },
+  "keywords": [
+    "lodash",
+    "customize",
+    "builder"
+  ],
+  "author": "PoppinL <poppinlp@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 4"
+  },
+  "bugs": {
+    "url": "https://github.com/poppinlp/lodash-builder/issues"
+  },
+  "homepage": "https://github.com/poppinlp/lodash-builder#readme",
+  "dependencies": {
+    "lodash": "4.17.4",
+    "mkdirp": "0.5.1",
+    "rollup": "0.45.2",
+    "rollup-plugin-commonjs": "8.0.2",
+    "rollup-plugin-node-resolve": "3.0.0"
+  },
+  "devDependencies": {
+    "ava": "0.21.0",
+    "coveralls": "2.13.1",
+    "eslint": "4.3.0",
+    "eslint-config-handsome": "0.2.3",
+    "nyc": "11.1.0",
+    "tap-diff": "0.1.1"
+  }
+}
