@@ -4,7 +4,11 @@ import fs from 'fs';
 import test from 'ava';
 import lodashBuilder from '../index.js';
 
-test('[output stdout] should build with no error', async t => {
+test('default params', async t => {
+	await t.notThrows(lodashBuilder());
+});
+
+test('minify and output to stdout', async t => {
 	await t.notThrows(lodashBuilder({
 		methods: [
 			'assignIn',
@@ -13,7 +17,7 @@ test('[output stdout] should build with no error', async t => {
 	}));
 });
 
-test('[output file] should build with no error', async t => {
+test('minify and output to file', async t => {
 	const tmpFile = path.join(os.tmpdir(), 'lodash-builder-tmp-dist.js');
 
 	await t.notThrows(lodashBuilder({
@@ -25,4 +29,14 @@ test('[output file] should build with no error', async t => {
 	}));
 
 	fs.unlinkSync(tmpFile);
+});
+
+test('no minify and output to stdout', async t => {
+	await t.notThrows(lodashBuilder({
+		methods: [
+			'assignIn',
+			'clone'
+		],
+		minify: false
+	}));
 });

@@ -4,20 +4,21 @@ const
 const
 	rollup = require('rollup'),
 	mkdirp = require('mkdirp'),
+	uglify = require('uglify-es'),
+	assign = require('lodash/assign'),
 	commonjs = require('rollup-plugin-commonjs'),
 	nodeResolve = require('rollup-plugin-node-resolve');
+const DEFAULT_CONFIG = {
+	methods: [],
+	minify: true
+};
 
-module.exports = ({
-	methods = [],
-	moduleName = '',
-	context = 'window',
-	format = 'iife',
-	output
-}) => {
+module.exports = (config = {}) => {
 	const
 		BUILD_FILE_PATH = path.normalize(`_lodash-builder-${Date.now()}.js`),
 		lodashImportList = [],
-		lodashExportList = [];
+		lodashExportList = [],
+		{ methods, minify, output } = assign({}, DEFAULT_CONFIG, config);
 
 	methods.forEach(name => {
 		lodashImportList.push(`import _${name} from 'lodash/${name}';`);
@@ -33,7 +34,7 @@ module.exports = ({
 
 	return rollup.rollup({
 		entry: BUILD_FILE_PATH,
-		context,
+		context: 'window',
 		plugins: [
 			nodeResolve({
 				jsnext: true,
@@ -49,14 +50,16 @@ module.exports = ({
 			})
 		]
 	}).then(bundle => bundle.generate({
-		format,
-		moduleName
+		format: 'iife',
+		moduleName: ''
 	})).then(({ code }) => {
+		const result = minify ? uglify.minify(code).code : code;
+
 		if (output) {
 			mkdirp(path.parse(output).dir);
-			fs.writeFileSync(output, code);
+			fs.writeFileSync(output, result);
 		} else {
-			console.log(code);
+			console.log(result);
 		}
 
 		fs.unlinkSync(BUILD_FILE_PATH);

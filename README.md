@@ -13,7 +13,7 @@ Build your own lodash since there's too many methods in lodash which you may not
 
 - packed by rollup
 - output in IIFE format or ECMAScript Module
-- use in CLI or nodejs
+- use in nodejs or [CLI]()
 - produce minify dist and source map
 
 ## Install
@@ -44,6 +44,14 @@ Default: `[]`
 
 Description: lodash methods which you want.
 
+#### minify
+
+Type: `<boolean>`
+
+Default: `true`
+
+Description: minify the dist or not.
+
 #### output
 
 Type: `<string>`
@@ -60,11 +68,13 @@ The export module will response a promise which include `code`.
 
 ```js
 const lodashBuilder = require('lodash-builder');
+
 lodashBuilder({
 	methods: [
 		'assignIn',
 		'clone'
-	]
+	],
+	output: 'path/to/target'
 });
 ```
 
