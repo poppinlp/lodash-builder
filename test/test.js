@@ -11,8 +11,7 @@ test('default params', async t => {
 test('minify and output to stdout', async t => {
 	await t.notThrows(lodashBuilder({
 		methods: [
-			'assignIn',
-			'clone'
+			'join'
 		]
 	}));
 });
@@ -22,8 +21,7 @@ test('minify and output to file', async t => {
 
 	await t.notThrows(lodashBuilder({
 		methods: [
-			'assignIn',
-			'clone'
+			'join'
 		],
 		output: tmpFile
 	}));
@@ -31,12 +29,31 @@ test('minify and output to file', async t => {
 	fs.unlinkSync(tmpFile);
 });
 
-test('no minify and output to stdout', async t => {
+test('no minify', async t => {
 	await t.notThrows(lodashBuilder({
 		methods: [
-			'assignIn',
-			'clone'
+			'join'
 		],
+		minify: false
+	}));
+});
+
+test('es format', async t => {
+	await t.notThrows(lodashBuilder({
+		methods: [
+			'join'
+		],
+		format: 'es',
+		minify: false
+	}));
+});
+
+test('umd format', async t => {
+	await t.notThrows(lodashBuilder({
+		methods: [
+			'join'
+		],
+		format: 'umd',
 		minify: false
 	}));
 });

@@ -10,15 +10,16 @@ const
 	nodeResolve = require('rollup-plugin-node-resolve');
 const DEFAULT_CONFIG = {
 	methods: [],
+	format: 'iife',
 	minify: true
 };
 
 module.exports = (config = {}) => {
 	const
-		BUILD_FILE_PATH = path.normalize(`_lodash-builder-${Date.now()}.js`),
+		BUILD_FILE_PATH = path.normalize(`_lodash-builder-${process.hrtime().join('')}.js`),
 		lodashImportList = [],
 		lodashExportList = [],
-		{ methods, minify, output } = assign({}, DEFAULT_CONFIG, config);
+		{ methods, minify, format, output } = assign({}, DEFAULT_CONFIG, config);
 
 	methods.forEach(name => {
 		lodashImportList.push(`import _${name} from 'lodash/${name}';`);
@@ -27,9 +28,7 @@ module.exports = (config = {}) => {
 
 	fs.writeFileSync(BUILD_FILE_PATH, `
 		${lodashImportList.join('')}
-		window._ = {
-			${lodashExportList.join('')}
-		};
+		export default { ${lodashExportList.join('')} };
 	`);
 
 	return rollup.rollup({
@@ -50,8 +49,8 @@ module.exports = (config = {}) => {
 			})
 		]
 	}).then(bundle => bundle.generate({
-		format: 'iife',
-		moduleName: ''
+		format,
+		moduleName: '_'
 	})).then(({ code }) => {
 		const result = minify ? uglify.minify(code).code : code;
 

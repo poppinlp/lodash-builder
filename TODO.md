@@ -1,3 +1,0 @@
-- support export esm dist
-- support more rollup params
-- add bin

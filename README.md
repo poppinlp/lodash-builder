@@ -52,6 +52,14 @@ Default: `true`
 
 Description: minify the dist or not.
 
+#### format
+
+Type: `<string>`
+
+Default: `iife`
+
+Description: output format. Could be `iife`, `es` or `umd`.
+
 #### output
 
 Type: `<string>`

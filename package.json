@@ -1,6 +1,6 @@
 {
   "name": "lodash-builder",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Build your own lodash by config.",
   "main": "index.js",
   "scripts": {
